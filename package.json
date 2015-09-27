@@ -7,10 +7,10 @@
   "keywords": "hubot, remember, multiline",
   "repository": {
     "type": "git",
-    "url": "git://github.com/hubot-scripts/hubot-remember-multiline.git"
+    "url": "git@github.com:ikuo/hubot-remember-multiline.git"
   },
   "bugs": {
-    "url": "https://github.com/hubot-scripts/hubot-remember-multiline/issues"
+    "url": "https://github.com/ikuo/hubot-remember-multiline/issues"
   },
   "dependencies": {
     "lodash": "^3.10.1"
