@@ -27,18 +27,21 @@ module.exports = (robot) ->
     robot.brain.set('remember', values)
 
   robot.respond ///list\s+#{REMEMBER}ed///, (msg) ->
+    msg.finish()
     text = _(memories())
       .map((value, key) -> "#{key}=#{_.trunc(value.replace("\n", '..'))}")
       .join("\n")
     msg.send text
 
   robot.respond ///#{REMEMBER}\s+(#{KEY})$///, (msg) ->
+    msg.finish()
     key = msg.match[1]
     value = get(key)
     result = value || "I don't remember #{key}."
     msg.send result
 
   robot.respond ///#{REMEMBER}\s+(#{KEY})\s+is(?:\s|\n)((.|\n)+)$///, (msg) ->
+    msg.finish()
     key = msg.match[1]
     value = msg.match[2]
     oldValue = get(key)
@@ -49,6 +52,7 @@ module.exports = (robot) ->
       msg.send 'ok'
 
   robot.respond ///forget\s+(#{KEY})$///, (msg) ->
+    msg.finish()
     key = msg.match[1]
     value = get(key)
     del(key)
