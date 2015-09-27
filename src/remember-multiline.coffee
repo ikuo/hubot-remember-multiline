@@ -11,27 +11,27 @@ module.exports = (robot) ->
   memories = () ->
     robot.brain.data.remember ?= {}
 
-  robot.respond /remember\s+(\w+)$/, (res) ->
-    key = res.match[1]
+  robot.respond /remember\s+(\w+)$/, (msg) ->
+    key = msg.match[1]
     value = memories()[key]
     result = value || "I don't remember #{key}."
-    res.send result
+    msg.send result
 
-  robot.respond /remember\s+(\w+)\s+is\s(.+)$/, (res) ->
-    key = res.match[1]
-    value = res.match[2]
+  robot.respond /remember\s+(\w+)\s+is\s(.+)$/, (msg) ->
+    key = msg.match[1]
+    value = msg.match[2]
     oldValue = memories()[key]
     memories()[key] = value
     if oldValue?
-      res.send "OK, I've forgotten the old value #{oldValue}."
+      msg.send "OK, I've forgotten the old value #{oldValue}."
     else
-      res.send 'OK'
+      msg.send 'OK'
 
-  robot.respond /forget\s+(\w+)$/, (res) ->
-    key = res.match[1]
+  robot.respond /forget\s+(\w+)$/, (msg) ->
+    key = msg.match[1]
     value = memories()[key]
     delete memories()[key]
     if value?
-      res.send "I've forgotten #{key} is #{value}."
+      msg.send "I've forgotten #{key} is #{value}."
     else
-      res.send "I've alredy forgotten #{key}."
+      msg.send "I've alredy forgotten #{key}."
