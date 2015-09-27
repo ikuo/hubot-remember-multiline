@@ -2,12 +2,14 @@
 #   A hubot script to remember a key and value with one or more lines
 #
 # Commands:
-#   hubot remember <key> is <value> - Write a key value pair to the brain.
-#   hubot remember <key> - Show value for a key.
+#   hubot remem[ber] <key> is <value> - Write a key value pair to the brain.
+#   hubot remem[ber] <key> - Show value for a key.
 #   hubot forget <key> - Remove key from the brain.
-#   hubot list remembered - Show all key value pairs.
+#   hubot list remem[ber]ed - Show all key value pairs.
 
 _ = require('lodash')
+KEY = '[\\w-]+'
+REMEMBER = 'remem(?:ber)?'
 
 module.exports = (robot) ->
   memories = () -> robot.brain.get('remember') ? {}
@@ -30,23 +32,23 @@ module.exports = (robot) ->
       .join("\n")
     msg.send text
 
-  robot.respond /remember\s+(\w+)$/, (msg) ->
+  robot.respond ///#{REMEMBER}\s+(#{KEY})$///, (msg) ->
     key = msg.match[1]
     value = get(key)
     result = value || "I don't remember #{key}."
     msg.send result
 
-  robot.respond /remember\s+(\w+)\s+is(?:\s|\n)((.|\n)+)$/, (msg) ->
+  robot.respond ///#{REMEMBER}\s+(#{KEY})\s+is(?:\s|\n)((.|\n)+)$///, (msg) ->
     key = msg.match[1]
     value = msg.match[2]
     oldValue = get(key)
     set(key, value)
     if oldValue?
-      msg.send "OK, I've forgotten the old value #{oldValue}."
+      msg.send "ok, and I've forgotten the old value #{oldValue}."
     else
-      msg.send 'OK'
+      msg.send 'ok'
 
-  robot.respond /forget\s+(\w+)$/, (msg) ->
+  robot.respond ///forget\s+(#{KEY})$///, (msg) ->
     key = msg.match[1]
     value = get(key)
     del(key)

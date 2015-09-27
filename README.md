@@ -25,7 +25,7 @@ Then add **hubot-remember-multiline** to your `external-scripts.json`:
 
 ```
 user1>> hubot remember key1 is value1
-hubot>> OK
+hubot>> ok
 user1>> hubot remember key1
 hubot>> value1
 ```
