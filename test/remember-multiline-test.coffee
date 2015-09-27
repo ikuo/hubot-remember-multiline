@@ -34,7 +34,7 @@ describe 'remember-multiline', ->
 
       it 'notifies non-existent key', ->
         expect(hubot.text('hubot remember key1'))
-          .to.eventually.equal("I don't remember key1.")
+          .to.eventually.equal("I don't remember key1")
 
   context 'remember <key> is <value>', ->
     context 'with existent key', ->
@@ -66,20 +66,20 @@ describe 'remember-multiline', ->
     context 'with existent key without any special char', ->
       it 'removes the key from the brain', ->
         hubot.text('hubot forget key1').then (response) ->
-          expect(response).to.equal("I've forgotten key1 is value1.")
+          expect(response).to.equal("I've forgotten key1 is value1")
           expect(robot.brain.get('remember')).to.deep.equal(key2: 'value2')
 
     context 'with non-existent key', ->
       it 'notifies non-existent key', ->
         hubot.text('hubot forget key0').then (response) ->
-          expect(response).to.equal("I've alredy forgotten key0.")
+          expect(response).to.equal("I've alredy forgotten key0")
           expect(robot.brain.get('remember')).to.deep.equal(key1: 'value1', key2: 'value2')
 
     context 'with existent key with hyphen', ->
       beforeEach -> robot.brain.set('remember', 'key-hyphen': 'value1', key2: 'value2')
       it 'removes the key from the brain', ->
         hubot.text('hubot forget key-hyphen').then (response) ->
-          expect(response).to.equal("I've forgotten key-hyphen is value1.")
+          expect(response).to.equal("I've forgotten key-hyphen is value1")
           expect(robot.brain.get('remember')).to.deep.equal(key2: 'value2')
 
 

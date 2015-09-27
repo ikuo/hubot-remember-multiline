@@ -37,7 +37,7 @@ module.exports = (robot) ->
     msg.finish()
     key = msg.match[1]
     value = get(key)
-    result = value || "I don't remember #{key}."
+    result = value || "I don't remember #{key}"
     msg.send result
 
   robot.respond ///#{REMEMBER}\s+(#{KEY})\s+is(?:\s|\n)((.|\n)+)$///, (msg) ->
@@ -47,7 +47,7 @@ module.exports = (robot) ->
     oldValue = get(key)
     set(key, value)
     if oldValue?
-      msg.send "ok, and I've forgotten the old value #{oldValue}."
+      msg.send "ok, and I've forgotten the old value #{oldValue}"
     else
       msg.send 'ok'
 
@@ -57,6 +57,6 @@ module.exports = (robot) ->
     value = get(key)
     del(key)
     if value?
-      msg.send "I've forgotten #{key} is #{value}."
+      msg.send "I've forgotten #{key} is #{value}"
     else
-      msg.send "I've alredy forgotten #{key}."
+      msg.send "I've alredy forgotten #{key}"
