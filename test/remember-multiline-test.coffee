@@ -1,19 +1,22 @@
-chai = require 'chai'
-sinon = require 'sinon'
-chai.use require 'sinon-chai'
-
-expect = chai.expect
+expect = require('chai').use(require('chai-as-promised')).expect
+hubot = require('hubot-mock-adapter-as-promised')
 
 describe 'remember-multiline', ->
-  beforeEach ->
-    @robot =
-      respond: sinon.spy()
-      hear: sinon.spy()
+  hubot.includeContext ->
+    robot.loadFile(require('path').resolve('.', 'src'), 'remember-multiline.coffee')
 
-    require('../src/remember-multiline')(@robot)
+  context 'remember <key>', ->
+    context 'when key exists', ->
+      beforeEach ->
+        robot.brain.data.remember = { key1: 'value1' }
 
-  it 'registers a respond listener', ->
-    expect(@robot.respond).to.have.been.calledWith(/hello/)
+      it 'shows the value', ->
+        expect(hubot.text('hubot remember key1'))
+          .to.eventually.match(/value1/)
 
-  it 'registers a hear listener', ->
-    expect(@robot.hear).to.have.been.calledWith(/orly/)
+    context 'when key does not exist', ->
+      it 'notifies non-existent key', ->
+        expect(hubot.text('hubot remember key1'))
+          .to.eventually.match(/I don't remember `key1`/)
+
+  #context 'remember <key> is <value>', ->
