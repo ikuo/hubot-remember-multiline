@@ -1,6 +1,9 @@
 # hubot-remember-multiline
 
-A hubot script to remember a key and value with one or more lines.
+[![npm version](https://badge.fury.io/js/hubot-remember-multiline.svg)](http://badge.fury.io/js/hubot-remember-multiline)
+[![Build Status](https://travis-ci.org/ikuo/hubot-remember-multiline.svg?branch=master)](https://travis-ci.org/ikuo/hubot-remember-multiline)
+
+A hubot script to remember values with one or more lines.
 
 See [`src/remember-multiline.coffee`](src/remember-multiline.coffee) for full documentation.
 
@@ -21,7 +24,7 @@ Then add **hubot-remember-multiline** to your `external-scripts.json`:
 ## Sample Interaction
 
 ```
-user1>> hubot remember key1=value1
+user1>> hubot remember key1 is value1
 hubot>> OK
 user1>> hubot remember key1
 hubot>> value1
