@@ -31,3 +31,7 @@ hubot>> value1
 ```
 
 See [./test/*.coffee](./test) for more examples.
+
+## See Also
+
+`remember.coffee` in hubot-scripts.
