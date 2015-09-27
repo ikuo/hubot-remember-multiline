@@ -14,7 +14,7 @@ module.exports = (robot) ->
   robot.respond /remember\s+(\w+)$/, (res) ->
     key = res.match[1]
     value = memories()[key]
-    result = value || "I don't remember `#{key}`"
+    result = value || "I don't remember #{key}."
     res.send result
 
   robot.respond /remember\s+(\w+)\s+is\s(.+)$/, (res) ->
@@ -23,6 +23,15 @@ module.exports = (robot) ->
     oldValue = memories()[key]
     memories()[key] = value
     if oldValue?
-      res.send "Overwrote old value `#{oldValue}`"
+      res.send "OK, I've forgotten the old value #{oldValue}."
     else
-      res.send 'ok'
+      res.send 'OK'
+
+  robot.respond /forget\s+(\w+)$/, (res) ->
+    key = res.match[1]
+    value = memories()[key]
+    delete memories()[key]
+    if value?
+      res.send "I've forgotten #{key} is #{value}."
+    else
+      res.send "I've alredy forgotten #{key}."
