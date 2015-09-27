@@ -1,6 +1,6 @@
 {
   "name": "hubot-remember-multiline",
-  "description": "A hubot script to remember a key and value with one or more lines",
+  "description": "A hubot script to remember values with one or more lines",
   "author": "Ikuo Matsumura <makiczar@gmail.com>",
   "license": "MIT",
   "keywords": "hubot, remember, multiline",
