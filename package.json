@@ -1,13 +1,12 @@
 {
   "name": "hubot-remember-multiline",
   "description": "A hubot script to remember a key and value with one or more lines",
-  "version": "0.0.0",
   "author": "Ikuo Matsumura <makiczar@gmail.com>",
   "license": "MIT",
   "keywords": "hubot, remember, multiline",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ikuo/hubot-remember-multiline.git"
+    "url": "https://github.com/ikuo/hubot-remember-multiline.git"
   },
   "bugs": {
     "url": "https://github.com/ikuo/hubot-remember-multiline/issues"
@@ -26,10 +25,12 @@
     "hubot-mock-adapter": "^1.0.0",
     "hubot-mock-adapter-as-promised": "^1.2.1",
     "matchdep": "~0.3.0",
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "semantic-release": "^4.3.5"
   },
   "main": "index.coffee",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   }
 }
