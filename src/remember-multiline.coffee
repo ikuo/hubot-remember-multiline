@@ -10,8 +10,19 @@
 _ = require('lodash')
 
 module.exports = (robot) ->
-  memories = () ->
-    robot.brain.data.remember ?= {}
+  memories = () -> robot.brain.get('remember') ? {}
+
+  get = (key) -> memories()?[key]
+
+  set = (key, value) ->
+    values = memories()
+    values[key] = value
+    robot.brain.set('remember', values)
+
+  del = (key) ->
+    values = memories()
+    delete values[key]
+    robot.brain.set('remember', values)
 
   robot.respond /list remembered/, (msg) ->
     text = _(memories())
@@ -21,15 +32,15 @@ module.exports = (robot) ->
 
   robot.respond /remember\s+(\w+)$/, (msg) ->
     key = msg.match[1]
-    value = memories()[key]
+    value = get(key)
     result = value || "I don't remember #{key}."
     msg.send result
 
   robot.respond /remember\s+(\w+)\s+is(?:\s|\n)((.|\n)+)$/, (msg) ->
     key = msg.match[1]
     value = msg.match[2]
-    oldValue = memories()[key]
-    memories()[key] = value
+    oldValue = get(key)
+    set(key, value)
     if oldValue?
       msg.send "OK, I've forgotten the old value #{oldValue}."
     else
@@ -37,8 +48,8 @@ module.exports = (robot) ->
 
   robot.respond /forget\s+(\w+)$/, (msg) ->
     key = msg.match[1]
-    value = memories()[key]
-    delete memories()[key]
+    value = get(key)
+    del(key)
     if value?
       msg.send "I've forgotten #{key} is #{value}."
     else
