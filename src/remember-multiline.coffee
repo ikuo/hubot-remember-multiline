@@ -7,9 +7,15 @@
 #   hubot forget <key> - Remove key from the brain.
 #   hubot list remembered - Show all key value pairs.
 
+_ = require('lodash')
+
 module.exports = (robot) ->
   memories = () ->
     robot.brain.data.remember ?= {}
+
+  robot.respond /list remembered/, (msg) ->
+    text = _(memories()).map((value, key) -> "#{key}=#{value}").join("\n")
+    msg.send text
 
   robot.respond /remember\s+(\w+)$/, (msg) ->
     key = msg.match[1]
