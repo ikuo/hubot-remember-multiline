@@ -3,7 +3,7 @@
   "description": "A hubot script to remember values with one or more lines",
   "author": "Ikuo Matsumura <makiczar@gmail.com>",
   "license": "MIT",
-  "keywords": "hubot, remember, multiline",
+  "keywords": "hubot, remember, multiline, hubot-scripts",
   "repository": {
     "type": "git",
     "url": "https://github.com/ikuo/hubot-remember-multiline.git"
