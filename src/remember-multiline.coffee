@@ -26,7 +26,7 @@ module.exports = (robot) ->
     delete values[key]
     robot.brain.set('remember', values)
 
-  robot.respond /list remembered/, (msg) ->
+  robot.respond ///list\s+#{REMEMBER}ed///, (msg) ->
     text = _(memories())
       .map((value, key) -> "#{key}=#{_.trunc(value.replace("\n", '..'))}")
       .join("\n")
