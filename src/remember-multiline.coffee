@@ -14,7 +14,9 @@ module.exports = (robot) ->
     robot.brain.data.remember ?= {}
 
   robot.respond /list remembered/, (msg) ->
-    text = _(memories()).map((value, key) -> "#{key}=#{value}").join("\n")
+    text = _(memories())
+      .map((value, key) -> "#{key}=#{_.trunc(value.replace("\n", '..'))}")
+      .join("\n")
     msg.send text
 
   robot.respond /remember\s+(\w+)$/, (msg) ->
@@ -23,7 +25,7 @@ module.exports = (robot) ->
     result = value || "I don't remember #{key}."
     msg.send result
 
-  robot.respond /remember\s+(\w+)\s+is\s(.+)$/, (msg) ->
+  robot.respond /remember\s+(\w+)\s+is(?:\s|\n)((.|\n)+)$/, (msg) ->
     key = msg.match[1]
     value = msg.match[2]
     oldValue = memories()[key]

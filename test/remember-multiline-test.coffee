@@ -7,11 +7,17 @@ describe 'remember-multiline', ->
 
   context 'remember <key>', ->
     context 'with existent key', ->
-      beforeEach -> robot.brain.data.remember = { key1: 'value1' }
+      context 'with single-line value', ->
+        beforeEach -> robot.brain.data.remember = { key1: 'value1' }
+        it 'shows the value', ->
+          expect(hubot.text('hubot remember key1'))
+            .to.eventually.equal("value1")
 
-      it 'shows the value', ->
-        expect(hubot.text('hubot remember key1'))
-          .to.eventually.equal("value1")
+      context 'with multi-line value', ->
+        beforeEach -> robot.brain.data.remember = { key1: "value1a\nvalue1b" }
+        it 'shows the value', ->
+          expect(hubot.text('hubot remember key1'))
+            .to.eventually.equal("value1a\nvalue1b")
 
     context 'with non-existent key', ->
       beforeEach -> robot.brain.data.remember = undefined
@@ -32,10 +38,17 @@ describe 'remember-multiline', ->
     context 'with non-existent key', ->
       beforeEach -> robot.brain.data.remember = undefined
 
-      it 'writes to the brain saying "OK"', ->
-        hubot.text('hubot remember key1 is value1').then (response) ->
-          expect(response).to.equal("OK")
-          expect(robot.brain.data.remember).to.deep.equal(key1: 'value1')
+      context 'with single-line value', ->
+        it 'writes to the brain saying "OK"', ->
+          hubot.text('hubot remember key1 is value1').then (response) ->
+            expect(response).to.equal("OK")
+            expect(robot.brain.data.remember).to.deep.equal(key1: 'value1')
+
+      context 'with multi-line value', ->
+        it 'writes to the brain saying "OK"', ->
+          hubot.text('hubot remember key1 is\nvalue1a\nvalue1b').then (response) ->
+            expect(response).to.equal("OK")
+            expect(robot.brain.data.remember).to.deep.equal(key1: 'value1a\nvalue1b')
 
   context 'forget <key>', ->
     beforeEach -> robot.brain.data.remember = { key1: 'value1', key2: 'value2' }
@@ -54,8 +67,17 @@ describe 'remember-multiline', ->
 
   context 'list remembered', ->
     context 'with existent key', ->
-      beforeEach -> robot.brain.data.remember = { key1: 'value1', key2: 'value2' }
+      beforeEach -> robot.brain.data.remember =
+        key1: "value1"
+        key2: "value2"
+        key3: "value3a\nvalue3b"
 
       it 'shows all key value pairs', ->
-        expect(hubot.text('hubot list remembered'))
-          .to.eventually.equal("key1=value1\nkey2=value2")
+        hubot.text('hubot list remembered').then (response) ->
+          expect(response).to.match(/key1=value1/)
+          expect(response).to.match(/key2=value2/)
+          expect(response).to.match(/key3=value3a/)
+
+      it 'shows multiline values in single line', ->
+        hubot.text('hubot list remembered').then (response) ->
+          expect(response).to.match(/key3=value3a..value3b/)
