@@ -5,7 +5,7 @@
 #   hubot remem[ber] <key> is <value> - Write a key value pair to the brain.
 #   hubot remem[ber] <key> - Show value for a key.
 #   hubot forget <key> - Remove key from the brain.
-#   hubot list remem[ber]ed - Show all key value pairs.
+#   hubot list remem[bered] - Show all key value pairs.
 
 _ = require('lodash')
 KEY = '[\\w-]+'
@@ -26,7 +26,7 @@ module.exports = (robot) ->
     delete values[key]
     robot.brain.set('remember', values)
 
-  robot.respond ///list\s+#{REMEMBER}ed///, (msg) ->
+  robot.respond ///list\s+#{REMEMBER}(ed)?///, (msg) ->
     msg.finish()
     text = _(memories())
       .map((value, key) -> "#{key}=#{_.trunc(value.replace("\n", '..'))}")

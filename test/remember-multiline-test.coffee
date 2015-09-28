@@ -99,3 +99,7 @@ describe 'remember-multiline', ->
       it 'shows multiline values in single line', ->
         hubot.text('hubot list remembered').then (response) ->
           expect(response).to.match(/key3=value3a..value3b/)
+
+      it 'responds by abbreviated messages', ->
+        hubot.text('hubot list remem').then (response) ->
+          expect(response).to.match(/key1=value1/)
