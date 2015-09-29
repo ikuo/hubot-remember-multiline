@@ -1,6 +1,7 @@
 {
   "name": "hubot-remember-multiline",
   "description": "A hubot script to remember values with one or more lines",
+  "version": "1.2.3",
   "author": "Ikuo Matsumura <makiczar@gmail.com>",
   "license": "MIT",
   "keywords": "hubot, remember, multiline, hubot-scripts",
@@ -12,6 +13,7 @@
     "url": "https://github.com/ikuo/hubot-remember-multiline/issues"
   },
   "dependencies": {
+    "hubot-config": "^1.0.1",
     "lodash": "^3.10.1"
   },
   "peerDependencies": {

@@ -85,21 +85,31 @@ describe 'remember-multiline', ->
 
   context 'list remembered', ->
     context 'with existent key', ->
-      beforeEach -> robot.brain.set 'remember',
-        key1: "value1"
-        key2: "value2"
-        key3: "value3a\nvalue3b"
+      context 'when short values', ->
+        beforeEach -> robot.brain.set 'remember',
+          key1: "value1"
+          key2: "value2"
+          key3: "value3a\nvalue3b"
 
-      it 'shows all key value pairs', ->
-        hubot.text('hubot list remembered').then (response) ->
-          expect(response).to.match(/key1=value1/)
-          expect(response).to.match(/key2=value2/)
-          expect(response).to.match(/key3=value3a/)
+        it 'shows all key value pairs', ->
+          hubot.text('hubot list remembered').then (response) ->
+            expect(response).to.match(/key1=value1/)
+            expect(response).to.match(/key2=value2/)
+            expect(response).to.match(/key3=value3a/)
 
-      it 'shows multiline values in single line', ->
-        hubot.text('hubot list remembered').then (response) ->
-          expect(response).to.match(/key3=value3a..value3b/)
+        it 'shows multiline values in single line', ->
+          hubot.text('hubot list remembered').then (response) ->
+            expect(response).to.match(/key3=value3a  value3b/)
 
-      it 'responds by abbreviated messages', ->
-        hubot.text('hubot list remem').then (response) ->
-          expect(response).to.match(/key1=value1/)
+        it 'responds by abbreviated messages', ->
+          hubot.text('hubot list remem').then (response) ->
+            expect(response).to.match(/key1=value1/)
+
+      context 'when long values', ->
+        beforeEach -> robot.brain.set 'remember',
+          key3: "value3a\nvalue3b long long long long text\nlong long"
+
+        context 'when default setting', ->
+          it 'shows value truncated with 80 chars', ->
+            hubot.text('hubot list remembered').then (response) ->
+              expect(response).to.match(/key3=value3a  value3b long long long long text  long long$/)

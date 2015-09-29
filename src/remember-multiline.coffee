@@ -1,5 +1,9 @@
-# Description
+# Description:
 #   A hubot script to remember a key and value with one or more lines
+#
+# Configuration:
+#   HUBOT_REMEMBER_MULTILINE_MAX_VALUE_CHARS_IN_LIST - default '120'
+#   HUBOT_REMEMBER_MULTILINE_LINE_DELIMITER_IN_LIST - default '  '
 #
 # Commands:
 #   hubot remem[ber] <key> is <value> - Write a key value pair to the brain.
@@ -8,11 +12,20 @@
 #   hubot list remem[bered] - Show all key value pairs.
 
 _ = require('lodash')
+
+config = require('hubot-config')('remember-multiline',
+  maxValueCharsInList: '80',
+  lineDeliiterInList: '  '
+)
+
+config.maxValueCharsInList = Number(config.maxValueCharsInList)
+
 KEY = '[\\w-]+'
 REMEMBER = 'remem(?:ber)?'
 
 module.exports = (robot) ->
   memories = () -> robot.brain.get('remember') ? {}
+  newlines = /\n/g
 
   get = (key) -> memories()?[key]
 
@@ -29,7 +42,12 @@ module.exports = (robot) ->
   robot.respond ///list\s+#{REMEMBER}(ed)?///, (msg) ->
     msg.finish()
     text = _(memories())
-      .map((value, key) -> "#{key}=#{_.trunc(value.replace("\n", '..'))}")
+      .map((value, key) ->
+        valueStr = _.trunc(
+          value.replace(newlines, config.lineDeliiterInList),
+          length: config.maxValueCharsInList)
+        "#{key}=#{valueStr}"
+      )
       .join("\n")
     msg.send text
 
