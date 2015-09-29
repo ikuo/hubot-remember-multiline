@@ -1,7 +1,7 @@
 {
   "name": "hubot-remember-multiline",
   "description": "A hubot script to remember values with one or more lines",
-  "version": "1.2.3",
+  "version": "0.0.0-semantic-release",
   "author": "Ikuo Matsumura <makiczar@gmail.com>",
   "license": "MIT",
   "keywords": "hubot, remember, multiline, hubot-scripts",
