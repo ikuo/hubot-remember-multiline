@@ -15,7 +15,7 @@ _ = require('lodash')
 
 config = require('hubot-config')('remember-multiline',
   maxValueCharsInList: '80',
-  lineDeliiterInList: '  '
+  lineDelimiterInList: '  '
 )
 
 config.maxValueCharsInList = Number(config.maxValueCharsInList)
@@ -44,7 +44,7 @@ module.exports = (robot) ->
     text = _(memories())
       .map((value, key) ->
         valueStr = _.trunc(
-          value.replace(newlines, config.lineDeliiterInList),
+          value.replace(newlines, config.lineDelimiterInList),
           length: config.maxValueCharsInList)
         "#{key}=#{valueStr}"
       )
