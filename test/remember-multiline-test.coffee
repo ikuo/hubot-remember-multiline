@@ -93,17 +93,17 @@ describe 'remember-multiline', ->
 
         it 'shows all key value pairs', ->
           hubot.text('hubot list remembered').then (response) ->
-            expect(response).to.match(/key1=value1/)
-            expect(response).to.match(/key2=value2/)
-            expect(response).to.match(/key3=value3a/)
+            expect(response).to.match(/\[key1\]\tvalue1/)
+            expect(response).to.match(/\[key2\]\tvalue2/)
+            expect(response).to.match(/\[key3\]\tvalue3a/)
 
         it 'shows multiline values in single line', ->
           hubot.text('hubot list remembered').then (response) ->
-            expect(response).to.match(/key3=value3a  value3b/)
+            expect(response).to.match(/\[key3\]\tvalue3a  value3b/)
 
         it 'responds by abbreviated messages', ->
           hubot.text('hubot list remem').then (response) ->
-            expect(response).to.match(/key1=value1/)
+            expect(response).to.match(/\[key1\]\tvalue1/)
 
       context 'when long values', ->
         beforeEach -> robot.brain.set 'remember',
@@ -112,4 +112,4 @@ describe 'remember-multiline', ->
         context 'when default setting', ->
           it 'shows value truncated with 80 chars', ->
             hubot.text('hubot list remembered').then (response) ->
-              expect(response).to.match(/key3=value3a  value3b long long long long text  long long$/)
+              expect(response).to.match(/\[key3\]\tvalue3a  value3b long long long long text  long long$/)

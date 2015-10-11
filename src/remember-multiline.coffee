@@ -4,6 +4,7 @@
 # Configuration:
 #   HUBOT_REMEMBER_MULTILINE_MAX_VALUE_CHARS_IN_LIST - default '120'
 #   HUBOT_REMEMBER_MULTILINE_LINE_DELIMITER_IN_LIST - default '  '
+#   HUBOT_REMEMBER_MULTILINE_KEY_VALUE_DELIMITER_IN_LIST - default "\t"
 #
 # Commands:
 #   hubot remem[ber] <key> is <value> - Write a key value pair to the brain.
@@ -15,7 +16,8 @@ _ = require('lodash')
 
 config = require('hubot-config')('remember-multiline',
   maxValueCharsInList: '80',
-  lineDelimiterInList: '  '
+  lineDelimiterInList: '  ',
+  keyValueDelimiterInList: "\t"
 )
 
 config.maxValueCharsInList = Number(config.maxValueCharsInList)
@@ -46,8 +48,9 @@ module.exports = (robot) ->
         valueStr = _.trunc(
           value.replace(newlines, config.lineDelimiterInList),
           length: config.maxValueCharsInList)
-        "#{key}=#{valueStr}"
+        "[#{key}]#{config.keyValueDelimiterInList}#{valueStr}"
       )
+      .sort()
       .join("\n")
     msg.send text
 
