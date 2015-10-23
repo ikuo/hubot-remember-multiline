@@ -72,7 +72,7 @@ describe 'remember-multiline', ->
     context 'with non-existent key', ->
       it 'notifies non-existent key', ->
         hubot.text('hubot forget key0').then (response) ->
-          expect(response).to.equal("I've alredy forgotten key0")
+          expect(response).to.equal("I've already forgotten key0")
           expect(robot.brain.get('remember')).to.deep.equal(key1: 'value1', key2: 'value2')
 
     context 'with existent key with hyphen', ->
