@@ -90,6 +90,7 @@ describe 'remember-multiline', ->
           key1: "value1"
           key2: "value2"
           key3: "value3a\nvalue3b"
+          key4: "```value4a\nvalue4b```"
 
         it 'shows all key value pairs', ->
           hubot.text('hubot list remembered').then (response) ->
@@ -100,6 +101,10 @@ describe 'remember-multiline', ->
         it 'shows multiline values in single line', ->
           hubot.text('hubot list remembered').then (response) ->
             expect(response).to.match(/\[key3\]\tvalue3a  value3b/)
+
+        it 'removes block quote strings', ->
+          hubot.text('hubot list remembered').then (response) ->
+            expect(response).to.match(/\[key4\]\tvalue4a  value4b/)
 
         it 'responds by abbreviated messages', ->
           hubot.text('hubot list remem').then (response) ->

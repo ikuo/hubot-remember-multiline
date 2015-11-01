@@ -45,9 +45,11 @@ module.exports = (robot) ->
     msg.finish()
     text = _(memories())
       .map((value, key) ->
-        valueStr = _.trunc(
-          value.replace(newlines, config.lineDelimiterInList),
-          length: config.maxValueCharsInList)
+        value =
+          value
+            .replace(newlines, config.lineDelimiterInList)
+            .replace('```', '') # remove block quote separators
+        valueStr = _.trunc(value, length: config.maxValueCharsInList)
         "[#{key}]#{config.keyValueDelimiterInList}#{valueStr}"
       )
       .sort()
