@@ -82,4 +82,4 @@ module.exports = (robot) ->
     if value?
       msg.send "I've forgotten #{key} is #{value}"
     else
-      msg.send "I've alredy forgotten #{key}"
+      msg.send "I've already forgotten #{key}"
